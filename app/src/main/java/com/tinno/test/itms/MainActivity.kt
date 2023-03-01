@@ -1,0 +1,61 @@
+package com.tinno.test.itms
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.util.Log
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
+import com.tinno.test.itms.databinding.ActivityMainBinding
+
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+    private val mainAdapter by lazy {
+        ViewPagerAdapter(
+            this,
+            arrayListOf(HomeFragment(), ReportFragment(), MineFragment())
+        )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        initView()
+    }
+
+
+    private fun initView() {
+        initViewPager()
+        initBottomNav()
+    }
+
+    /**
+     * 初始化ViewPager
+     */
+    private fun initViewPager() {
+        //设置适配器
+        binding.mainViewPager.adapter = mainAdapter
+        //设置页面选择回调监听
+        binding.mainViewPager.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                binding.bottomNav.menu.getItem(position).isChecked = true
+            }
+        })
+    }
+
+    /**
+     * 初始化BottomNavigationView
+     */
+    private fun initBottomNav() {
+        //设置底部导航栏的点击监听
+        binding.bottomNav.setOnItemSelectedListener {
+            //设置当前viewPager的页面，order是在menu中设置的orderInCategory属性
+            binding.mainViewPager.setCurrentItem(it.order, false)
+            true
+        }
+    }
+
+}

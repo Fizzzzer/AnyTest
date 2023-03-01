@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AnyTest</string>
+
+    <string name="main_home">Home</string>
+    <string name="main_report">Report</string>
+    <string name="main_mine">Mine</string>
+</resources>

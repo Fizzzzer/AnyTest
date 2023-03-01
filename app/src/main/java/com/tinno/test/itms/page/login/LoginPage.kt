@@ -14,6 +14,7 @@ class LoginPage : BaseActivity<ActivityLoginLayoutBinding, LoginViewModel>() {
 
         mViewModel?.loginState?.observe(this) {
             mViewModel?.showToast(it)
+            
         }
     }
 

@@ -18,7 +18,7 @@ class NetLogInterceptor :Interceptor{
 
         Log.i(
             tag,
-            format.format(Date()) + " Requeste " + "\nmethod:" + request.method + "\nurl:" + request.url + "\nbody:" + request.body
+            format.format(Date()) + " Requeste " + "\nmethod:" + request.method + "\nurl:" + request.url + "\nbody:" + request.body.toString()
         )
 
         var response = chain.proceed(request)

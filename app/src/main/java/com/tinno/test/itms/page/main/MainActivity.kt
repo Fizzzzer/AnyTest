@@ -1,10 +1,11 @@
-package com.tinno.test.itms
+package com.tinno.test.itms.page.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.tinno.test.itms.MineFragment
+import com.tinno.test.itms.ReportFragment
+import com.tinno.test.itms.ViewPagerAdapter
 import com.tinno.test.itms.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

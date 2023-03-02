@@ -6,6 +6,7 @@ import com.tinno.test.itms.base.BaseActivity
 import com.tinno.test.itms.base.BaseViewModel
 import com.tinno.test.itms.databinding.ActivitySplashLayoutBinding
 import com.tinno.test.itms.page.login.LoginPage
+import com.tinno.test.itms.page.main.MainActivity
 import com.tinno.test.itms.utils.LoginManager
 
 class SplashActivity : BaseActivity<ActivitySplashLayoutBinding, BaseViewModel>() {

@@ -1,5 +1,6 @@
 package com.tinno.test.itms.net
 
+import okhttp3.EventListener
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -17,8 +18,8 @@ class RetrofitClient private constructor() {
     private fun createOkhttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .callTimeout(30, TimeUnit.SECONDS)
-//            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            .addInterceptor(NetLogInterceptor())
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+//            .addInterceptor(NetLogInterceptor())
             .build()
     }
 

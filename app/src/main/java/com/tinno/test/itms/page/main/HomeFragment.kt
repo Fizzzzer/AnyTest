@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
+import com.chad.library.adapter.base.animation.AlphaInAnimation
 import com.tinno.test.itms.R
 import com.tinno.test.itms.databinding.FragmentHomeLayoutBinding
 import com.tinno.test.itms.model.BannerModel
+import com.tinno.test.itms.widget.EmptyView
 import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
@@ -18,6 +21,12 @@ class HomeFragment : Fragment() {
 
     private lateinit var mViewModel: HomeViewModel
     private lateinit var binding: FragmentHomeLayoutBinding
+
+    //项目的适配器
+    private val mProjectAdapter by lazy { ProjectListAdapter() }
+
+    private val mEmptyView by lazy { context?.let { EmptyView(it) } }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,10 +41,21 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
         initEvent()
+        initObserver()
+        initData()
     }
 
     private fun initView() {
         initBannerView()
+        initRecyclerView()
+    }
+
+    private fun initRecyclerView(){
+        binding.projectListView.apply {
+            layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+            mProjectAdapter.adapterAnimation = AlphaInAnimation()
+            adapter = mProjectAdapter
+        }
     }
 
     /**
@@ -61,9 +81,26 @@ class HomeFragment : Fragment() {
     }
 
     private fun initEvent() {
-        binding.btn.setOnClickListener {
-            mViewModel.getData()
+
+    }
+
+    private fun initObserver() {
+        mViewModel.projectListLiveData.observe(viewLifecycleOwner) {
+            it?.let {
+                it.list?.let {data->
+                    mProjectAdapter.addData(data)
+                }
+            } ?: let {
+                mEmptyView?.let { emptyView->
+                    mProjectAdapter.setEmptyView(emptyView)
+                }
+            }
         }
+    }
+
+
+    private fun initData(){
+        mViewModel.getData()
     }
 
 }

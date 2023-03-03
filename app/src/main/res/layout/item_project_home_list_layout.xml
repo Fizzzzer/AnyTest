@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="15dp"
+    android:layout_marginBottom="15dp"
+    app:cardCornerRadius="9dp"
+    app:cardElevation="3dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/ic_plane"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/circleImageStyle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/createName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/icon"
+            app:layout_constraintStart_toEndOf="@id/icon"
+            app:layout_constraintTop_toTopOf="@id/icon"
+            tools:text="Fizzer" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/projectName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:ellipsize="end"
+            android:gravity="end"
+            android:lines="1"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/createName"
+            app:layout_constraintTop_toTopOf="@id/icon"
+            tools:text="项目名称" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/startTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="@id/icon"
+            app:layout_constraintTop_toBottomOf="@id/icon"
+            tools:text="开始时间" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/endTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FF5722"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="@id/projectName"
+            app:layout_constraintTop_toTopOf="@id/startTime"
+            tools:text="结束时间" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/taskName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@id/startTime"
+            app:layout_constraintTop_toBottomOf="@id/startTime"
+            tools:text="我的测试计划" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/taskPlan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="@id/taskName"
+            app:layout_constraintTop_toBottomOf="@id/taskName"
+            tools:text="我的测试计划" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/taskDesc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:textColor="#FF5722"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/projectName"
+            app:layout_constraintStart_toStartOf="@id/taskPlan"
+            app:layout_constraintTop_toBottomOf="@id/taskPlan"
+            tools:text="这里是测试描述" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iconPass"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_pass"
+            android:tint="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/taskDesc"
+            app:layout_constraintTop_toBottomOf="@id/taskDesc" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/passCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="9dp"
+            android:text="100"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/iconPass"
+            app:layout_constraintStart_toEndOf="@id/iconPass"
+            app:layout_constraintTop_toTopOf="@id/iconPass" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iconFail"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/ic_fail"
+            android:tint="#FF5722"
+            android:layout_marginStart="50dp"
+            app:layout_constraintStart_toEndOf="@id/passCount"
+            app:layout_constraintTop_toTopOf="@id/iconPass"
+            app:layout_constraintBottom_toBottomOf="@id/iconPass"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/failCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="9dp"
+            android:text="50"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/iconFail"
+            app:layout_constraintStart_toEndOf="@id/iconFail"
+            app:layout_constraintTop_toTopOf="@id/iconFail" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

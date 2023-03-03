@@ -120,13 +120,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/functionContent" />
 
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn"
-            android:layout_width="wrap_content"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/projectListView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="请求数据"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,6 +1,7 @@
 package com.tinno.test.itms.net
 
 import com.tinno.test.itms.model.LoginResponseModel
+import com.tinno.test.itms.model.ProjectMainModel
 import retrofit2.http.*
 
 interface ApiServices {
@@ -18,5 +19,5 @@ interface ApiServices {
         @Query("order") order: String,
         @Query("JSESSIONID") session: String,
         @Query("X-Tfts-Token") token: String,
-    ): ResultData<Any>
+    ): ResultData<ProjectMainModel>
 }

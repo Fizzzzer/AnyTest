@@ -1,10 +1,13 @@
 package com.tinno.test.itms.base
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
+import com.tinno.test.itms.page.login.LoginPage
+import com.tinno.test.itms.utils.LoginManager
 import com.tinno.test.itms.utils.ToastUtils
 
 abstract class BaseActivity<T : ViewBinding, VM : BaseViewModel> : AppCompatActivity() {
@@ -47,9 +50,13 @@ abstract class BaseActivity<T : ViewBinding, VM : BaseViewModel> : AppCompatActi
 
     //初始化观察者
     open fun initObserver() {
-
         mViewModel?.mToastLiveData?.observe(this) {
             ToastUtils.showToast(this, it)
+        }
+
+        mViewModel?.logoutLiveData?.observe(this) {
+            LoginManager.logOut()
+            startActivity(Intent(this, LoginPage::class.java))
         }
     }
 }

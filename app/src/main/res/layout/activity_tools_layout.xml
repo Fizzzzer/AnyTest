@@ -4,11 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/logout"
-        android:layout_width="wrap_content"
+        android:id="@+id/downLoad"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="退出登录"
+        android:text="测试下载"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/toolsListView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

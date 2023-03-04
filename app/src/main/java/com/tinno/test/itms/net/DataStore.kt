@@ -2,6 +2,7 @@ package com.tinno.test.itms.net
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tinno.test.itms.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -16,19 +17,19 @@ class DataStore private constructor() {
     }
 
     fun <T> request(
-        viewModel: ViewModel,
+        viewModel: BaseViewModel,
         requestBlock: suspend () -> ResultData<T>, onSuccess: (T?) -> Unit
     ) {
         request(
             viewModel, requestBlock, onSuccess,
-            onError = { errorCode, errorMsg -> handlerError(errorCode, errorMsg) })
+            onError = { errorCode, errorMsg -> handlerError(viewModel, errorCode, errorMsg) })
     }
 
     /**
      * 接口请求数据封装
      */
     fun <T> request(
-        viewModel: ViewModel,
+        viewModel: BaseViewModel,
         requestBlock: suspend () -> ResultData<T>,
         onSuccess: (T?) -> Unit,
         onError: (errorCode: Int, errorMsg: String) -> Unit
@@ -51,7 +52,13 @@ class DataStore private constructor() {
     /**
      * 统一的错误处理
      */
-    private fun handlerError(errorCode: Int, errorMsg: String) {
+    private fun handlerError(viewModel: BaseViewModel, errorCode: Int, errorMsg: String) {
 
+        when (errorCode) {
+            501 -> {
+                viewModel.showToast(errorMsg)
+                viewModel.showLogoutDialog()
+            }
+        }
     }
 }

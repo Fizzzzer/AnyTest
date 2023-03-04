@@ -2,6 +2,7 @@ package com.tinno.test.itms.net
 
 import com.tinno.test.itms.model.LoginResponseModel
 import com.tinno.test.itms.model.ProjectMainModel
+import okhttp3.ResponseBody
 import retrofit2.http.*
 
 interface ApiServices {
@@ -20,4 +21,8 @@ interface ApiServices {
         @Query("JSESSIONID") session: String,
         @Query("X-Tfts-Token") token: String,
     ): ResultData<ProjectMainModel>
+
+    @Streaming
+    @GET
+    suspend fun downLoad(@Url url:String):ResponseBody
 }

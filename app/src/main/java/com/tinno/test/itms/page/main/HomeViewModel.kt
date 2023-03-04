@@ -3,12 +3,13 @@ package com.tinno.test.itms.page.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.tinno.test.itms.base.BaseViewModel
 import com.tinno.test.itms.model.ProjectMainModel
 import com.tinno.test.itms.net.DataStore
 import com.tinno.test.itms.net.RetrofitClient
 import com.tinno.test.itms.utils.LoginManager
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel : BaseViewModel() {
 
     val projectListLiveData: LiveData<ProjectMainModel?> get() = _projectListLiveData
     private val _projectListLiveData: MutableLiveData<ProjectMainModel?> = MutableLiveData()

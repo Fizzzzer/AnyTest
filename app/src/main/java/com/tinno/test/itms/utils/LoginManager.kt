@@ -36,6 +36,7 @@ object LoginManager {
      */
     fun logOut() {
         SPUtils.instance.putString(SPKey.KEY_ACCESS_TOKEN, "")
+        UserInfoManager.clearUserInfo()
     }
 
     /**

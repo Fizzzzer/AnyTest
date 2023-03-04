@@ -19,4 +19,8 @@ object UserInfoManager {
             SPUtils.instance.putString(SPKey.KEY_NICK_NAME, it.nickName)
         }
     }
+
+    fun clearUserInfo(){
+        SPUtils.instance.putString(SPKey.KEY_NICK_NAME, "")
+    }
 }

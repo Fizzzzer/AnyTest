@@ -18,12 +18,22 @@ class RetrofitClient private constructor() {
         return OkHttpClient.Builder()
             .callTimeout(30, TimeUnit.SECONDS)
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor(ITMSHeaderInterceptor())
 //            .addInterceptor(NetLogInterceptor())
             .build()
     }
 
     fun api(): ApiServices {
         val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(createOkhttpClient())
+            .build()
+
+        return retrofit.create(ApiServices::class.java)
+    }
+
+    fun testApi(testUrl: String): ApiServices {
+        val retrofit = Retrofit.Builder().baseUrl(testUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .client(createOkhttpClient())
             .build()

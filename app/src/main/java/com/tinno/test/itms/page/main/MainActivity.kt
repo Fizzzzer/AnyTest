@@ -1,5 +1,7 @@
 package com.tinno.test.itms.page.main
 
+import android.Manifest
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.viewpager2.widget.ViewPager2
@@ -30,6 +32,9 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
         initViewPager()
         initBottomNav()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE),1000)
+        }
     }
 
     /**

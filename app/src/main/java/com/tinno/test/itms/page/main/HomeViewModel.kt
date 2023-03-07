@@ -23,8 +23,6 @@ class HomeViewModel : BaseViewModel() {
                         limit = 20,
                         sort = "create_time",
                         order = "desc",
-                        session = LoginManager.getToken(),
-                        token = LoginManager.getToken()
                     )
             },
             onSuccess = {

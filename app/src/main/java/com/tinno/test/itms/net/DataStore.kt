@@ -36,15 +36,19 @@ class DataStore private constructor() {
     ) {
         viewModel.viewModelScope.launch(Dispatchers.IO) {
             //做实际的接口请求
-            val responseResult = requestBlock.invoke()
-            withContext(Dispatchers.Main) {
-                if (responseResult.isSuccess()) {
-                    //处理成功事件
-                    onSuccess.invoke(responseResult.data)
-                } else {
-                    //处理错误的事件
-                    onError.invoke(responseResult.errno, responseResult.errmsg)
+            try {
+                val responseResult = requestBlock.invoke()
+                withContext(Dispatchers.Main) {
+                    if (responseResult.isSuccess()) {
+                        //处理成功事件
+                        onSuccess.invoke(responseResult.data)
+                    } else {
+                        //处理错误的事件
+                        onError.invoke(responseResult.errno, responseResult.errmsg)
+                    }
                 }
+            } catch (ex: Exception) {
+                onError.invoke(-1, ex.message ?: "未知错误")
             }
         }
     }
@@ -53,10 +57,9 @@ class DataStore private constructor() {
      * 统一的错误处理
      */
     private fun handlerError(viewModel: BaseViewModel, errorCode: Int, errorMsg: String) {
-
+        viewModel.showToast(errorMsg)
         when (errorCode) {
             501 -> {
-                viewModel.showToast(errorMsg)
                 viewModel.showLogoutDialog()
             }
         }

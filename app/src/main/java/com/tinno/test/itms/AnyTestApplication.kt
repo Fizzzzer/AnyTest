@@ -10,6 +10,16 @@ class AnyTestApplication : Application() {
         @SuppressLint("StaticFieldLeak")
         private lateinit var mContext: Context
         fun getApplicationContext(): Context = mContext
+
+        /**
+         * 获取缓存文件的存储路径
+         */
+        fun getCacheDirPath(): String = mContext.cacheDir.path
+
+        /**
+         * 获取文件路径
+         */
+        fun getFileDirPath(): String = mContext.filesDir.path
     }
 
 

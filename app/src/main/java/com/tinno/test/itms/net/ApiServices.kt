@@ -18,8 +18,6 @@ interface ApiServices {
         @Query("limit") limit: Int,
         @Query("sort") sort: String,
         @Query("order") order: String,
-        @Query("JSESSIONID") session: String,
-        @Query("X-Tfts-Token") token: String,
     ): ResultData<ProjectMainModel>
 
     @Streaming

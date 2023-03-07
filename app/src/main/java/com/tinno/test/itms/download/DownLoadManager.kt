@@ -1,8 +1,13 @@
 package com.tinno.test.itms.download
 
+import android.os.Build
+import android.os.Environment
 import android.util.Log
+import androidx.annotation.RequiresApi
+import com.tinno.test.itms.AnyTestApplication
 import com.tinno.test.itms.net.DataStore
 import com.tinno.test.itms.net.RetrofitClient
+import okhttp3.ResponseBody
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
@@ -13,15 +18,24 @@ class DownLoadManager private constructor() {
     }
 
     val url =
-        "http://itms.tinno.com:9000/tfts-prod/tools/73211297418004512/2023.03.03_12.03.52/AutoTestTool_M02_M01_R28.rar"
+        "https://github.com/Fizzzzer/FizzerLib/blob/master/app/build.gradle"
 
-    suspend fun downFile() {
-        val file = File("sdcard/MTBF")
+    suspend fun downFile(downLoadListener: DownLoadListener? = null) {
+        val file = File("${AnyTestApplication.getCacheDirPath()}/AnyTest")
+        Log.e("Fizzer", "File.path = ${file.path}")
         if (!file.exists()) {
-            file.mkdirs()
+            val result = file.mkdir()
+            Log.e("Fizzer", "mkfile result = $result")
         }
-        val downLoadFile = File(file,"file.rar")
-        val response = RetrofitClient.INSTANCE.api().downLoad(url)
+        val downLoadFile = File(file, "file.txt")
+        var response: ResponseBody? = null
+        try {
+            response = RetrofitClient.INSTANCE.testApi("https://github.com/").downLoad(url)
+        } catch (ex: Exception) {
+            downLoadListener?.onFail(-1, ex.message ?: "未知错误")
+            Log.e("Fizzer", ex.message.toString())
+            return
+        }
         var inStream: InputStream? = null
         var outStream: OutputStream? = null
         kotlin.runCatching {
@@ -39,14 +53,14 @@ class DownLoadManager private constructor() {
                 这里加一个限制条件,只有下载百分比更新了才切换线程去更新UI*/
                 if ((currentLength * 100 / contentLength).toInt() > percent) {
                     percent = (currentLength / contentLength * 100).toInt()
-                    Log.e("Fizzer","percent = $percent")
+                    Log.e("Fizzer", "percent = $percent")
                     //更新完成UI之后立刻切回IO线程
+                    downLoadListener?.onProgress(percent)
                 }
-
                 len = inStream?.read(buff) ?: -1
             }
-
-            Log.e("Fizzer","下载完成")
+            Log.e("Fizzer", "下载完成")
+            downLoadListener?.onSuccess(downLoadFile)
         }
     }
 }

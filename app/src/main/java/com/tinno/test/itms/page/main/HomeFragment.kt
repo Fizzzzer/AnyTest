@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.chad.library.adapter.base.animation.AlphaInAnimation
 import com.tinno.test.itms.R
+import com.tinno.test.itms.base.BaseFragment
 import com.tinno.test.itms.databinding.FragmentHomeLayoutBinding
 import com.tinno.test.itms.model.BannerModel
 import com.tinno.test.itms.page.login.LoginPage
@@ -21,37 +22,23 @@ import com.youth.banner.adapter.BannerImageAdapter
 import com.youth.banner.holder.BannerImageHolder
 import com.youth.banner.indicator.CircleIndicator
 
-class HomeFragment : Fragment() {
-
-    private lateinit var mViewModel: HomeViewModel
-    private lateinit var binding: FragmentHomeLayoutBinding
+class HomeFragment : BaseFragment<FragmentHomeLayoutBinding, HomeViewModel>() {
 
     //项目的适配器
     private val mProjectAdapter by lazy { ProjectListAdapter() }
 
     private val mEmptyView by lazy { context?.let { EmptyView(it) } }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentHomeLayoutBinding.inflate(inflater, container, false)
-        mViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        return binding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initView()
-        initEvent()
-        initObserver()
-        initData()
-    }
-
-    private fun initView() {
+    override fun initView() {
+        super.initView()
+        binding.appTitle.apply {
+            title = "项目"
+            iconVisible = false
+        }
         initBannerView()
         initRecyclerView()
+
     }
 
     private fun initRecyclerView() {
@@ -60,6 +47,8 @@ class HomeFragment : Fragment() {
             mProjectAdapter.adapterAnimation = AlphaInAnimation()
             adapter = mProjectAdapter
         }
+
+        binding.refreshLayout.setEnableLoadMore(false)
     }
 
     /**
@@ -84,34 +73,49 @@ class HomeFragment : Fragment() {
         }).addBannerLifecycleObserver(this).indicator = CircleIndicator(context)
     }
 
-    private fun initEvent() {
+    override fun initEvent() {
+        super.initEvent()
         binding.toolsContent.setOnClickListener {
             startActivity(Intent(context, ToolsPage::class.java))
         }
+
+        binding.refreshLayout.setOnRefreshListener {
+            mViewModel?.getData()
+        }
     }
 
-    private fun initObserver() {
-        mViewModel.projectListLiveData.observe(viewLifecycleOwner) {
+    override fun initObserver() {
+        super.initObserver()
+        mViewModel?.projectListLiveData?.observe(viewLifecycleOwner) {
+            binding.refreshLayout.finishRefresh()
             it?.let {
                 it.list?.let { data ->
+                    mProjectAdapter.data.clear()
                     mProjectAdapter.addData(data)
                 }
             } ?: let {
                 mEmptyView?.let { emptyView ->
+                    mProjectAdapter.data.clear()
+                    mProjectAdapter.notifyDataSetChanged()
                     mProjectAdapter.setEmptyView(emptyView)
                 }
             }
         }
-
-        mViewModel.logoutLiveData.observe(viewLifecycleOwner) {
-            LoginManager.logOut()
-            startActivity(Intent(context, LoginPage::class.java))
-        }
     }
 
 
-    private fun initData() {
-        mViewModel.getData()
+    override fun initData() {
+        super.initData()
+        mViewModel?.getData()
     }
+
+    override fun bindingLayoutInflate(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentHomeLayoutBinding {
+        return FragmentHomeLayoutBinding.inflate(inflater, container, false)
+    }
+
+    override fun getViewModelClass(): Class<HomeViewModel> = HomeViewModel::class.java
 
 }

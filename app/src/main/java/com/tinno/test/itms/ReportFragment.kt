@@ -1,22 +1,28 @@
 package com.tinno.test.itms
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.tinno.test.itms.databinding.FragmentHomeLayoutBinding
+import com.tinno.test.itms.base.BaseFragment
+import com.tinno.test.itms.base.BaseViewModel
 import com.tinno.test.itms.databinding.FragmentReportLayoutBinding
 
-class ReportFragment : Fragment() {
-
-    private lateinit var binding: FragmentReportLayoutBinding
-    override fun onCreateView(
+class ReportFragment : BaseFragment<FragmentReportLayoutBinding,BaseViewModel>() {
+    override fun bindingLayoutInflate(
         inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentReportLayoutBinding.inflate(inflater, container, false)
-        return binding.root
+        container: ViewGroup?
+    ): FragmentReportLayoutBinding {
+        return FragmentReportLayoutBinding.inflate(inflater,container,false)
     }
+
+    override fun getViewModelClass(): Class<BaseViewModel> = BaseViewModel::class.java
+
+
+    override fun initView() {
+        super.initView()
+        binding.appTitle.apply {
+            title = "JIRA"
+            iconVisible = false
+        }
+    }
+
 }

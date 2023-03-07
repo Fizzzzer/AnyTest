@@ -10,8 +10,8 @@ import com.tinno.test.itms.page.login.LoginPage
 import com.tinno.test.itms.utils.LoginManager
 import com.tinno.test.itms.utils.ToastUtils
 
-abstract class BaseActivity<T : ViewBinding, VM : BaseViewModel> : AppCompatActivity() {
-    lateinit var binding: T
+abstract class BaseActivity<VB : ViewBinding, VM : BaseViewModel> : AppCompatActivity() {
+    lateinit var binding: VB
 
     var mViewModel: VM? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,12 +32,11 @@ abstract class BaseActivity<T : ViewBinding, VM : BaseViewModel> : AppCompatActi
         getViewModelClass()?.let {
             mViewModel = ViewModelProvider(this).get(it)
         }
-
     }
 
 
     //初始化ViewBinding
-    abstract fun bindingLayoutInflate(layoutInflater: LayoutInflater): T
+    abstract fun bindingLayoutInflate(layoutInflater: LayoutInflater): VB
 
     //初始化视图
     open fun initView() {}

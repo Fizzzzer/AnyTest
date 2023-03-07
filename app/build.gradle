@@ -52,15 +52,22 @@ dependencies {
     // LiveData
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    //kotlin协程组件
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1"
-
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.1"
-
+    //网络请求组件
     implementation "com.squareup.retrofit2:retrofit:${retrofit_version}"
     implementation "com.squareup.retrofit2:converter-gson:${retrofit_version}"
     implementation "com.squareup.okhttp3:logging-interceptor:${logging_interceptor_version}"
+    //下拉刷新组件
+    implementation  'io.github.scwang90:refresh-layout-kernel:2.0.5'      //核心必须依赖
+    implementation  'io.github.scwang90:refresh-header-classics:2.0.5'    //经典刷新头
+    implementation  'io.github.scwang90:refresh-footer-classics:2.0.5'    //经典加载
+    //Banner轮播图组件
     implementation 'io.github.youth5201314:banner:2.2.2'
+    //图片加载组件
     implementation "io.coil-kt:coil:2.2.2"
+    //adapter组件
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.10'
 }
